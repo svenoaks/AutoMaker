@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AutoRapMaker.iml" filepath="$PROJECT_DIR$/AutoRapMaker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/resample/resample.iml" filepath="$PROJECT_DIR$/resample/resample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/syllablizer/syllablizer.iml" filepath="$PROJECT_DIR$/syllablizer/syllablizer.iml" />
+    </modules>
+  </component>
+</project>
+

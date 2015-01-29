@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.1"
+
+    repositories {
+        jcenter()
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
+
+    }
+
+    defaultConfig {
+        applicationId "com.smp.autorapmaker"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+
+        ndk {
+            moduleName "soundprocess"
+            cFlags "-std=c++11 -fexceptions -Wall -D ST_NO_EXCEPTION_HANDLING -fdata-sections -ffunction-sections -marm -fvisibility=hidden -I ./soundtouch/include"
+            ldLibs "log"
+            stl "gnustl_shared"
+            abiFilter "armeabi-v7a"
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':syllablizer')
+    compile 'com.android.support:appcompat-v7:21.0.+'
+    compile 'com.android.support:cardview-v7:21.0.+'
+    compile 'com.jakewharton:butterknife:6.0.0'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.android.support:recyclerview-v7:21.0.+'
+    compile 'com.google.android.gms:play-services:6.5.+'
+    compile 'com.jpardogo.materialtabstrip:library:1.0.7'
+    compile 'joda-time:joda-time:2.6'
+    compile 'com.github.satyan:sugar:1.3'
+    compile project(':resample')
+}
