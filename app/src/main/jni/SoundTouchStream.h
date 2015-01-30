@@ -30,11 +30,9 @@ private:
     inline int saturate(float, float, float);
     int process(const unique_ptr<SAMPLETYPE[]>&, int, bool);
 
-
-
 public:
 
-	const vector<jbyte>& getStream();
+	vector<jbyte> getStream();
 
 	void transformSamples(vector<jbyte>& input);
 
@@ -50,7 +48,7 @@ public:
 
 	SoundTouchStream();
 
-	SoundTouchStream(const SoundTouchStream& other);
+	//SoundTouchStream(const SoundTouchStream& other);
 	SoundTouchStream(int channels, int sampleRate, int bytesPerSample, float tempo, float pitchSemi);
 };
 

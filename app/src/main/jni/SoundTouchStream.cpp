@@ -19,9 +19,9 @@ SoundTouchStream::SoundTouchStream() {
 	sampleRate = bytesPerSample = 0;
 }
 
-SoundTouchStream::SoundTouchStream(const SoundTouchStream& other) {
+/*SoundTouchStream::SoundTouchStream(const SoundTouchStream& other) {
 	sampleRate = bytesPerSample = 0;
-}
+}*/
 
 SoundTouchStream::SoundTouchStream(int channels, int sampleRate,
                                     int bytesPerSample, float tempo, float pitchSemi)
@@ -31,22 +31,24 @@ SoundTouchStream::SoundTouchStream(int channels, int sampleRate,
 
 void SoundTouchStream::transformSamples(vector<jbyte>& input)
 {
-    const int bytesPerSample = getBytesPerSample();
+    const static int MAX_SIZE = 2048;
 
     auto it = input.begin();
     while (it < input.end())
     {
-         const static int MAX_SIZE = 2048;
-
-         auto length = min(MAX_SIZE, distance(it, input.end()));
+         const auto length = min(MAX_SIZE, distance(it, input.end()));
          const int BUFF_SIZE = length / bytesPerSample;
          unique_ptr<SAMPLETYPE[]> fBufferIn(new SAMPLETYPE[BUFF_SIZE]);
          convertInput(&(*it), fBufferIn, BUFF_SIZE, bytesPerSample);
          process(fBufferIn, BUFF_SIZE, false); //audio is ongoing.
          it += length;
     }
+    const int BUFF_SIZE = MAX_SIZE / bytesPerSample;
+    unique_ptr<SAMPLETYPE[]> fBufferIn(new SAMPLETYPE[BUFF_SIZE]);
+    process(fBufferIn, BUFF_SIZE, true); //all bytes have been placed in the soundTouch pipe.
+
 }
-const vector<jbyte>& SoundTouchStream::getStream() {
+vector<jbyte> SoundTouchStream::getStream() {
 	return bufferOut;
 }
 
@@ -183,6 +185,9 @@ void SoundTouchStream::setup(int channels, int sampleRate,
 
 	setSetting(SETTING_USE_QUICKSEEK, false);
 	setSetting(SETTING_USE_AA_FILTER, true);
+	setSetting(SETTING_SEQUENCE_MS, 40);
+    setSetting(SETTING_SEEKWINDOW_MS, 15);
+    setSetting(SETTING_OVERLAP_MS, 8);
 
 }
 
